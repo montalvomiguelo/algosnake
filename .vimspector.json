@@ -1,0 +1,19 @@
+{
+  "configurations": {
+    "leetcode: Launch": {
+      "adapter": "debugpy",
+      "filetypes": [ "python" ],
+      "configuration": {
+        "name": "leetcode: Launch",
+        "type": "python",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "python": "/opt/homebrew/bin/python3",
+        "stopOnEntry": true,
+        "console": "externalTerminal",
+        "debugOptions": [],
+        "program": "${fileBasename}"
+      }
+    }
+  }
+}
