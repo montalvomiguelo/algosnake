@@ -18,4 +18,4 @@ def uniquePaths(m, n):
     return dp(m - 1, n - 1)
 
 
-print(uniquePaths(3, 7))
+print(uniquePaths(3, 2))
