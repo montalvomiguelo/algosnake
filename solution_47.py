@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter
 
 
 def permuteUnique(nums):
@@ -15,10 +15,7 @@ def permuteUnique(nums):
                 curr.pop()
                 counts[num] += 1
 
-    counts = defaultdict(int)
-    for num in nums:
-        counts[num] += 1
-
+    counts = Counter(nums)
     ans = []
     backtrack([], counts)
     return ans
