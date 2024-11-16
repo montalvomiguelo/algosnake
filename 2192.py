@@ -2,15 +2,14 @@ from collections import defaultdict
 
 
 def getAncestors(n, edges):
-    def dfs(node, path, seen):
+    def dfs(node, seen):
         if node in seen:
             return
 
-        path.append(node)
         seen.add(node)
 
         for nei in graph[node]:
-            dfs(nei, path, seen)
+            dfs(nei, seen)
 
     graph = defaultdict(list)
     for a, b in edges:
@@ -19,8 +18,12 @@ def getAncestors(n, edges):
     ans = []
     for i in range(n):
         path, seen = [], set()
-        dfs(i, path, seen)
-        ans.append(sorted(path[1:]))
+        dfs(i, seen)
+        for j in range(n):
+            if j in seen and i != j:
+                path.append(j)
+
+        ans.append(path)
 
     return ans
 
