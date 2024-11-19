@@ -2,12 +2,11 @@ import heapq
 
 
 def matchPlayersAndTrainers(players, trainers):
-    heapq.heapify(players)
+    players.sort()
     heapq.heapify(trainers)
 
     ans = 0
-    while players:
-        player = heapq.heappop(players)
+    for player in players:
         if not trainers:
             break
         trainer = heapq.heappop(trainers)
@@ -18,7 +17,3 @@ def matchPlayersAndTrainers(players, trainers):
             ans += 1
 
     return ans
-
-# print(matchPlayersAndTrainers([1, 1000000000], [1000000000, 1]))
-# print(matchPlayersAndTrainers([4, 7, 9], [8, 2, 5, 8]))
-# print(matchPlayersAndTrainers([1, 1, 1], [10]))
