@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 
 with open('aoc_24_01.txt') as f:
     lines = [l.rstrip('\n') for l in f]
@@ -22,3 +23,12 @@ for i in range(len(left)):
     diffs.append(abs(x - y))
 
 print(sum(diffs))
+
+# Part 2
+dic = Counter(right)
+ans = 0
+for x in left:
+    y = dic[x]
+    ans += y * x if y else 0
+
+print(ans)
