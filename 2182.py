@@ -1,28 +1,34 @@
 import heapq
-from collections import Counter
 
 
 def repeatLimitedString(s, repeatLimit):
-    counts = Counter(s)
-    heap = [(-ord(char), char) for char in counts]
+    counts = [0] * 26
+    for c in s:
+        counts[ord(c) - ord("a")] += 1
+
+    heap = []
+    for i in range(26):
+        if counts[i]:
+            heap.append((-(i + ord("a")),
+                         chr(i + ord("a")), i))
+
     heapq.heapify(heap)
     ans = []
     while heap:
-        _, char = heapq.heappop(heap)
-        limit = min(counts[char], repeatLimit)
-        for _ in range(limit):
-            ans.append(char)
-            counts[char] -= 1
+        _, c, i = heapq.heappop(heap)
+        limit = min(counts[i], repeatLimit)
+        ans.append(c * limit)
+        counts[i] -= limit
 
-        if counts[char] and heap:
-            _, nextChar = heapq.heappop(heap)
-            ans.append(nextChar)
-            counts[nextChar] -= 1
+        if counts[i] and heap:
+            _, nc, j = heapq.heappop(heap)
+            ans.append(nc)
+            counts[j] -= 1
 
-            heapq.heappush(heap, (-ord(char), char))
+            if counts[j]:
+                heapq.heappush(heap, (-ord(nc), nc, j))
 
-            if counts[nextChar]:
-                heapq.heappush(heap, (-ord(nextChar), nextChar))
+            heapq.heappush(heap, (-ord(c), c, i))
 
     return "".join(ans)
 
