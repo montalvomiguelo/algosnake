@@ -6,11 +6,8 @@ def repeatLimitedString(s, repeatLimit):
     for c in s:
         counts[ord(c) - ord("a")] += 1
 
-    heap = []
-    for i in range(26):
-        if counts[i]:
-            heap.append((-(i + ord("a")),
-                         chr(i + ord("a")), i))
+    heap = [(-(i + ord("a")), chr(i + ord("a")), i)
+            for i in range(26) if counts[i]]
 
     heapq.heapify(heap)
     ans = []
