@@ -7,11 +7,8 @@ def orangesRotting(grid):
 
     n = len(grid)
     m = len(grid[0])
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     queue = deque()
     freshOranges = 0
-    ans = 0
-
     for row in range(n):
         for col in range(m):
             if grid[row][col] == 2:
@@ -19,9 +16,10 @@ def orangesRotting(grid):
             elif grid[row][col] == 1:
                 freshOranges += 1
 
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    ans = 0
     while queue:
         row, col, steps = queue.popleft()
-        grid[row][col] = -1
 
         for dx, dy in directions:
             nextRow, nextCol = row + dy, col + dx
@@ -32,7 +30,7 @@ def orangesRotting(grid):
 
         ans = max(ans, steps)
 
-    return -1 if freshOranges else ans
+    return ans if not freshOranges else -1
 
 
 print(orangesRotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]))
