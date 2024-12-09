@@ -34,3 +34,34 @@ for update in validUpdates:
     ans += update[len(update) // 2]
 
 print(ans)
+
+# Part 2
+invalidUpdates = []
+for update in updates:
+    seen = set()
+    valid = True
+    for page in update:
+        if not valid:
+            break
+
+        seen.add(page)
+        for nei in graph[page]:
+            if nei in seen:
+                valid = False
+                break
+
+    if not valid:
+        invalidUpdates.append(update)
+
+for update in invalidUpdates:
+    n = len(update)
+    for i in range(n - 1):
+        for j in range(n - i - 1):
+            if update[j] in graph[update[j + 1]]:
+                update[j], update[j + 1] = update[j + 1], update[j]
+
+ans = 0
+for update in invalidUpdates:
+    ans += update[len(update) // 2]
+
+print(ans)
