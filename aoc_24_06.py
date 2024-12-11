@@ -7,32 +7,34 @@ def valid(row, col):
 
 n = len(grid)
 m = len(grid[0])
-stack = []
+curr = (-1, -1)
 seen = set()
 for row in range(n):
     for col in range(m):
         if grid[row][col] == '^':
             seen.add((row, col))
-            stack.append((row, col, 0))
+            curr = (row, col)
             break
 
 directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
-while stack:
-    row, col, i = stack.pop()
+i = 0
+while True:
     dy, dx = directions[i]
-    nextRow, nextCol = row + dy, col + dx
-    if valid(nextRow, nextCol):
-        if grid[nextRow][nextCol] != '#':
-            seen.add((nextRow, nextCol))
-            stack.append((nextRow, nextCol, i))
-            continue
+    nextRow, nextCol = curr[0] + dy, curr[1] + dx
+    if not valid(nextRow, nextCol):
+        break
 
-        i = (i + 1) % 4
-        dy, dx = directions[i]
-        nextRow, nextCol = row + dy, col + dx
-        if valid(nextRow, nextCol):
-            seen.add((nextRow, nextCol))
-            stack.append((nextRow, nextCol, i))
+    if grid[nextRow][nextCol] != '#':
+        seen.add((nextRow, nextCol))
+        curr = (nextRow, nextCol)
+        continue
+
+    i = (i + 1) % 4
+    dy, dx = directions[i]
+    nextRow, nextCol = curr[0] + dy, curr[1] + dx
+    if valid(nextRow, nextCol):
+        seen.add((nextRow, nextCol))
+        curr = (nextRow, nextCol)
 
 print(len(seen))
 
@@ -53,14 +55,14 @@ for row in range(n):
 
         grid[row][col] = '#'
         curr = root
-        seen = set()
+        seen = [[[0 for _ in range(4)] for _ in range(m)] for _ in range(n)]
         i = 0
         while True:
-            if (curr[0], curr[1], i) in seen:
+            if seen[curr[0]][curr[1]][i]:
                 ans += 1
                 break
 
-            seen.add((curr[0], curr[1], i))
+            seen[curr[0]][curr[1]][i] = 1
 
             dy, dx = directions[i]
             nextRow, nextCol = curr[0] + dy, curr[1] + dx
