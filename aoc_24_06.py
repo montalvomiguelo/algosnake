@@ -12,8 +12,8 @@ seen = set()
 for row in range(n):
     for col in range(m):
         if grid[row][col] == '^':
-            seen.add((row, col))
             curr = (row, col)
+            seen.add(curr)
             break
 
 directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
@@ -25,16 +25,16 @@ while True:
         break
 
     if grid[nextRow][nextCol] != '#':
-        seen.add((nextRow, nextCol))
         curr = (nextRow, nextCol)
+        seen.add((curr))
         continue
 
     i = (i + 1) % 4
     dy, dx = directions[i]
     nextRow, nextCol = curr[0] + dy, curr[1] + dx
     if valid(nextRow, nextCol):
-        seen.add((nextRow, nextCol))
         curr = (nextRow, nextCol)
+        seen.add(curr)
 
 print(len(seen))
 
@@ -55,7 +55,7 @@ for row in range(n):
 
         grid[row][col] = '#'
         curr = root
-        seen = [[[0 for _ in range(4)] for _ in range(m)] for _ in range(n)]
+        seen = [[[0] * 4 for _ in range(m)] for _ in range(n)]
         i = 0
         while True:
             if seen[curr[0]][curr[1]][i]:
